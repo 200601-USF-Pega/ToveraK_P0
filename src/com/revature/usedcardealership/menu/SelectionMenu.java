@@ -18,9 +18,10 @@ public class SelectionMenu implements IMenu{
 		MenuFactory menuFactory = new MenuFactory();
 		IMenu currentMenu;
 
-		int choice = inputValidation.getValidInt("\n Enter [0] to input vehicle selected... \n Enter [1] to exit ...");
-		
 		while (true) {
+		
+		int choice = inputValidation.getValidInt("\n Enter [0] to select vehicle... \n Enter [1] to exit ...");
+		
 		switch (choice) {
 			
 			case 0:

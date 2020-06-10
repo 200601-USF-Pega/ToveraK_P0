@@ -6,8 +6,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.revature.usedcardealership.menu.SelectionMenu;
+
 public class Inventory {
 	public ArrayList<String> carList = new ArrayList<String>();
+	SelectionMenu selectionMenu = new SelectionMenu();
 	
 	public void showInventory() {
 
@@ -47,6 +50,7 @@ public class Inventory {
 		} else {
 			System.out.println("We do not have " +prompt+ " in our inventory");
 			System.out.println("Please try again...\n");
+			selectionMenu.menuStart();
 			//System.out.println("--Please select a vehicle-- \n");
 			}
 	}

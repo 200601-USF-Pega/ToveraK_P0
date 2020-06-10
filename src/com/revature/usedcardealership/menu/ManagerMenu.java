@@ -43,7 +43,8 @@ public class ManagerMenu implements IMenu{
 				
 			case 1:
 				addCar.addVehicle();
-				choice = 0;
+				currentMenu = menuFactory.changeMenu("Manager");
+				currentMenu.menuStart();
 				break;
 			case 2:
 				

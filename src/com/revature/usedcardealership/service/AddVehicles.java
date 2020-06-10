@@ -23,9 +23,9 @@ public class AddVehicles {
 			try {
 				Vehicle newVehicle = new Vehicle(make, model, year, forSale);
 				System.out.println("Creating new vehicle...");
-				//System.out.println(newVehicle);
+				System.out.println(newVehicle);
 				this.newCar = newVehicle;
-				//System.out.println("New vehicle added");
+				System.out.println("New vehicle added");
 				
 				success = true;
 			} catch(Exception e) {
