@@ -13,6 +13,9 @@ public class Driver {
 		IMenu currentMenu = new LogInMenu();
 		
 		currentMenu.menuStart();
+		
+		//CarRepoDB crdb = new CarRepoDB();
+		//crdb.getAllCars();
 	}
 
 }

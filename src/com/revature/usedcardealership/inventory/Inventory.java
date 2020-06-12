@@ -54,5 +54,6 @@ public class Inventory {
 			//System.out.println("--Please select a vehicle-- \n");
 			}
 	}
+	
 }
 

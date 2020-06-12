@@ -4,16 +4,18 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
+import com.revature.usedcardealership.dao.CarRepoDB;
 import com.revature.usedcardealership.inventory.Inventory;
 import com.revature.usedcardealership.service.AddVehicles;
 import com.revature.usedcardealership.service.ValidationService;
 
 public class ManagerMenu implements IMenu{
+	AddVehicles addCar = new AddVehicles(new CarRepoDB());
 	
 	@Override
 	public void menuStart() throws FileNotFoundException, IOException {
 		ValidationService inputValidation = new ValidationService();
-		Scanner scan = new Scanner(System.in);
+//		Scanner scan = new Scanner(System.in);
 		
 		System.out.println("==============================");
 		System.out.println("| Welcome to our Dealership! |");
@@ -29,14 +31,18 @@ public class ManagerMenu implements IMenu{
 		
 		MenuFactory menuFactory = new MenuFactory();
 		IMenu currentMenu;
-		Inventory carInventory = new Inventory();
-		AddVehicles addCar = new AddVehicles();
+		//Inventory carInventory = new Inventory();
+		CarRepoDB carRepoDB = new CarRepoDB();
+
+		
+		
 		while (true) {
 		int choice = inputValidation.getValidInt("Enter input here:");
 		switch (choice) {
 		
 			case 0:
-				carInventory.showInventory();
+				carRepoDB.getAllCars();
+//				carInventory.showInventory();
 				currentMenu = menuFactory.changeMenu("Selection Menu");
 				currentMenu.menuStart();
 				break;
@@ -47,6 +53,8 @@ public class ManagerMenu implements IMenu{
 				currentMenu.menuStart();
 				break;
 			case 2:
+				
+				break;
 				
 			case 3:
 				currentMenu = menuFactory.changeMenu("Login Menu");

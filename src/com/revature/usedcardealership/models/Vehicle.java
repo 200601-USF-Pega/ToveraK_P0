@@ -1,14 +1,19 @@
 package com.revature.usedcardealership.models;
 
 public class Vehicle {
-
+	
+	private int id;
 	private String make;
 	private String model;
 	private int year;
-	private boolean forSale;
+	private int salePrice;
 	
 	public Vehicle() {
 		
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public Vehicle(String make, String model) {
@@ -17,10 +22,23 @@ public class Vehicle {
 		this.model = model;
 	}
 	
-	public Vehicle(String make, String model, int year, boolean forSale) {
+	public Vehicle(String make, String model, int year, int salePrice) {
 		this(make, model);
 		this.year = year;
-		this.forSale = forSale;
+		this.salePrice = salePrice;
+	}
+	
+	public Vehicle(int id, String make, String model, int year, int salePrice) {
+		this.id = id;
+		this.make = make;
+		this.model = model;
+		this.year = year;
+		this.salePrice = salePrice;
+		
+	}
+	
+	public int getId() {
+		return id;
 	}
 
 	public String getMake() {
@@ -47,24 +65,24 @@ public class Vehicle {
 		this.year = year;
 	}
 
-	public boolean isForSale() {
-		return forSale;
+	public int salePrice() {
+		return salePrice;
 	}
 
-	public void setForSale(boolean forSale) {
-		this.forSale = forSale;
+	public void setForSale(int salePrice) {
+		this.salePrice = salePrice;
 	}
 	
 	@Override
 	public String toString() {
-		return "[make=" + make + ", model=" + model + ", year=" + year + ", forSale=" + forSale + "]";
+		return "[id="+ id + ", make=" + make + ", model=" + model + ", year=" + year + ", price=$" + salePrice + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (forSale ? 1231 : 1237);
+		//result = prime * result + (forSale ? 1231 : 1237);
 		result = prime * result + ((make == null) ? 0 : make.hashCode());
 		result = prime * result + ((model == null) ? 0 : model.hashCode());
 		result = prime * result + year;
@@ -80,7 +98,7 @@ public class Vehicle {
 		if (getClass() != obj.getClass())
 			return false;
 		Vehicle other = (Vehicle) obj;
-		if (forSale != other.forSale)
+		if (salePrice != other.salePrice)
 			return false;
 		if (make == null) {
 			if (other.make != null)
