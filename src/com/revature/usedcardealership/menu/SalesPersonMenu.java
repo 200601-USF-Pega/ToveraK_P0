@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
+import com.revature.usedcardealership.dao.CarRepoDB;
 import com.revature.usedcardealership.inventory.Inventory;
 import com.revature.usedcardealership.service.ValidationService;
 
@@ -26,13 +27,15 @@ public class SalesPersonMenu implements IMenu{
 		
 		MenuFactory menuFactory = new MenuFactory();
 		IMenu currentMenu;
-		Inventory carInventory = new Inventory();
+		CarRepoDB carRepoDB = new CarRepoDB();
+		
 		while (true) {
 		int choice = inputValidation.getValidInt("Enter input here:");
 		switch (choice) {
 		
 			case 0:
-				carInventory.showInventory();
+				carRepoDB.getAllCars();
+//				carInventory.showInventory();
 				currentMenu = menuFactory.changeMenu("Selection Menu");
 				currentMenu.menuStart();
 				break;

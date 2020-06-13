@@ -42,7 +42,6 @@ public class ManagerMenu implements IMenu{
 		
 			case 0:
 				carRepoDB.getAllCars();
-//				carInventory.showInventory();
 				currentMenu = menuFactory.changeMenu("Selection Menu");
 				currentMenu.menuStart();
 				break;
@@ -53,7 +52,9 @@ public class ManagerMenu implements IMenu{
 				currentMenu.menuStart();
 				break;
 			case 2:
-				
+				carRepoDB.deleteCar();
+				currentMenu = menuFactory.changeMenu("Manager");
+				currentMenu.menuStart();
 				break;
 				
 			case 3:

@@ -18,7 +18,7 @@ public class TestDriveBuyMenu implements IMenu{
 		System.out.println("|                            |");
 		System.out.println("| 0 -- Test Drive vehicle    |");
 		System.out.println("| 1 -- Purchase vehicle      |");
-		System.out.println("| 2 -- Exit                  |");
+		System.out.println("| 2 -- Back to log-in        |");
 		System.out.println("|                            |");
 		System.out.println("==============================");
 		
@@ -29,14 +29,16 @@ public class TestDriveBuyMenu implements IMenu{
 		switch(choice) {
 			
 			case 0:
-				System.out.println("Vroom! Vroom!");
+				System.out.println("\n Vroom! Vroom! \n");
+				currentMenu = menuFactory.changeMenu("Login Menu");
+				currentMenu.menuStart();
 				break;
 			case 1:
 				System.out.println("$$$!");
 				break;
 			case 2:
-				System.out.println("Thanks for using this app Good Bye!");
-				System.exit(0);
+				currentMenu = menuFactory.changeMenu("Login Menu");
+				currentMenu.menuStart();
 				break;
 			default:
 				System.out.println("Please enter valid input...");

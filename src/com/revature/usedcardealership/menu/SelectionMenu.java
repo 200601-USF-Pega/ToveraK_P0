@@ -60,17 +60,19 @@ public class SelectionMenu implements IMenu{
 			
 		}
 
-		
+		while(true) {
 		carYear = inputValidation.getValidInt("\n--Please input year of vehicle selected-- \n");
 		carMake = inputValidation.getValidString("\n--Please input make of vehicle selected-- \n");
 		carModel = inputValidation.getValidString("\n--Please input model of vehicle selected-- \n");
 		
-//		if(yearList.contains(carYear) && makeList.contains(carMake) && modelList.contains(carModel)) {
-//			System.out.println(carYear + " " + carMake + " " + carModel);
-//		} else {
-//			System.out.println("didnt work");
-//		}
-
+		if(yearList.contains(carYear) && makeList.contains(carMake) && modelList.contains(carModel)) {
+			System.out.println("You have selected: " + carYear + " " + carMake + " " + carModel + "\n");
+			currentMenu = menuFactory.changeMenu("Test or Buy");
+			currentMenu.menuStart();
+		} else {
+			System.out.println("--Invalid input please try again--");
+		}
+		}
 	//	while (true) {
 		
 	//	int choice = inputValidation.getValidInt("\n Enter [0] to select vehicle... \n Enter [1] to exit ...");
