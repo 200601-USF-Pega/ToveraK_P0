@@ -4,14 +4,18 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
+import com.revature.usedcardealership.dao.CarRepoDB;
 import com.revature.usedcardealership.service.ValidationService;
 
 public class TestDriveBuyMenu implements IMenu{
+	static String buyCar;
 
 	@Override
 	public void menuStart() throws FileNotFoundException, IOException {
 		ValidationService inputValidation = new ValidationService();
-		Scanner scan = new Scanner(System.in);
+		
+		CarRepoDB carRepoDB = new CarRepoDB();
+//		Scanner scan = new Scanner(System.in);
 		
 		System.out.println("==============================");
 		System.out.println("| Would you like to:         |");
@@ -34,7 +38,11 @@ public class TestDriveBuyMenu implements IMenu{
 				currentMenu.menuStart();
 				break;
 			case 1:
-				System.out.println("$$$!");
+				System.out.println("\n You are about to purchase a " + buyCar);
+				carRepoDB.buyVehicle();
+				System.out.println("\n -- Thank you for shopping at our dealership-- \n\n\n");
+				currentMenu = menuFactory.changeMenu("Login Menu");
+				currentMenu.menuStart();
 				break;
 			case 2:
 				currentMenu = menuFactory.changeMenu("Login Menu");

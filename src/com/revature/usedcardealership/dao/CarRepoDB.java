@@ -97,6 +97,64 @@ public class CarRepoDB implements ICarRepo{
 		
 	}
 	
+	public void buyVehicle() {
+		ValidationService inputValidation = new ValidationService();
+		int salesId = inputValidation.getValidInt("--Please enter sales #id to process sale--");
+		int vehicleId = inputValidation.getValidInt("--Please enter vehicle #id to finish processing--");
+		String cFirstName = inputValidation.getValidString("--Enter customer first name--");
+		String cLastName = inputValidation.getValidString("--Enter customer last name--");
+		
+		try {
+			
+			
+			PreparedStatement vehicleStatement = connection.prepareStatement("INSERT INTO transactions (sales_id, vehicle_id, customer_fname, customer_lname) VALUES (?, ?, ?, ?)");
+			vehicleStatement.setInt(1, salesId);
+			vehicleStatement.setInt(2, vehicleId);
+			vehicleStatement.setString(3, cFirstName);
+			vehicleStatement.setString(4, cLastName);
+			vehicleStatement.executeUpdate();
+			
+			try {
+				connection.close();
+			} catch(Exception e) {
+				
+			}
+	
+			
+		} catch (SQLException e) {
+			System.out.println("Exception: " + e.getMessage());
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+//	public void getPrice() {
+//		ValidationService inputValidation = new ValidationService();
+//		int vehicleId = inputValidation.getValidInt("--Enter vehicle #id to confirm purchase--");
+//		
+//		
+//		try {
+//			Statement st = connection.createStatement();
+//			ResultSet rs = st.executeQuery("SELECT sale_price  FROM vehicles WHERE vehicle_id =" + vehicleId +";");
+//			while (rs.next()) {
+//				String price = rs.getString("sale_price");
+//				
+//				System.out.println(price);
+//				try {
+//					connection.close();
+//				} catch(Exception e) {
+//					
+//				}
+//			}
+//		}catch (Exception e) {
+//			
+//		}
+//		
+//	}
+	
+	
+	
 	public void deleteCar() throws FileNotFoundException, IOException {
 		
 		ValidationService inputValidation = new ValidationService();

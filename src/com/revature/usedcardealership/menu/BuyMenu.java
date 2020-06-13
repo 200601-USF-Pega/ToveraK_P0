@@ -4,11 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
-import com.revature.usedcardealership.dao.CarRepoDB;
-import com.revature.usedcardealership.inventory.Inventory;
 import com.revature.usedcardealership.service.ValidationService;
 
-public class SalesPersonMenu implements IMenu{
+public class BuyMenu implements IMenu{
 
 	@Override
 	public void menuStart() throws FileNotFoundException, IOException {
@@ -16,36 +14,36 @@ public class SalesPersonMenu implements IMenu{
 		Scanner scan = new Scanner(System.in);
 		
 		System.out.println("==============================");
-		System.out.println("| Welcome to our Dealership! |");
-		System.out.println("==============================");
-		System.out.println("| Please select:             |");
+		System.out.println("| Would you like to:         |");
 		System.out.println("|                            |");
-		System.out.println("|  0 -- Browse inventory     |");
-		System.out.println("|  1 -- Return to log-in menu|");
+		System.out.println("| 0 -- Test Drive vehicle    |");
+		System.out.println("| 1 -- Purchase vehicle      |");
+		System.out.println("| 2 -- Back to log-in        |");
 		System.out.println("|                            |");
 		System.out.println("==============================");
 		
 		MenuFactory menuFactory = new MenuFactory();
 		IMenu currentMenu;
-		CarRepoDB carRepoDB = new CarRepoDB();
-		
-		while (true) {
-		int choice = inputValidation.getValidInt("\n Enter input here: \n");
-		switch (choice) {
-		
+		while(true) {
+		int choice = inputValidation.getValidInt(" ");
+		switch(choice) {
+			
 			case 0:
-				carRepoDB.getAllCars();
-//				carInventory.showInventory();
-				currentMenu = menuFactory.changeMenu("Selection Menu");
-				currentMenu.menuStart();
-				break;
-				
-			case 1:
+				System.out.println("\n Vroom! Vroom! \n");
 				currentMenu = menuFactory.changeMenu("Login Menu");
 				currentMenu.menuStart();
 				break;
-				
+			case 1:
+				System.out.println("$$$!");
+				break;
+			case 2:
+				currentMenu = menuFactory.changeMenu("Login Menu");
+				currentMenu.menuStart();
+				break;
 			default:
+				System.out.println("Please enter valid input...");
+				choice = 0;
+				continue;
 		}
 		}
 	}

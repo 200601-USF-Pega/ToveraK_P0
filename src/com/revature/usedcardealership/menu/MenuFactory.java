@@ -22,6 +22,9 @@ public class MenuFactory {
 			case "Test or Buy":
 				newMenu = new TestDriveBuyMenu();
 				return newMenu;
+			case "Buy Menu":
+				newMenu = new BuyMenu();
+				return newMenu;
 			default:
 				System.out.println("Thanks for using this app Good Bye!");
 				System.exit(0);

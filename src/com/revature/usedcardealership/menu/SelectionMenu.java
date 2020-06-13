@@ -67,6 +67,14 @@ public class SelectionMenu implements IMenu{
 		
 		if(yearList.contains(carYear) && makeList.contains(carMake) && modelList.contains(carModel)) {
 			System.out.println("You have selected: " + carYear + " " + carMake + " " + carModel + "\n");
+			TestDriveBuyMenu.buyCar = carYear + " " + carMake + " " + carModel + "\n";
+			
+			try {
+				connection.close();
+			} catch(Exception e) {
+				
+			}
+			
 			currentMenu = menuFactory.changeMenu("Test or Buy");
 			currentMenu.menuStart();
 		} else {
@@ -110,5 +118,3 @@ public class SelectionMenu implements IMenu{
 		}
 		
 	}
-
-
