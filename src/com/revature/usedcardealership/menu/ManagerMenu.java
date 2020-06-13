@@ -25,7 +25,8 @@ public class ManagerMenu implements IMenu{
 		System.out.println("| 0 -- Browse inventory      |");
 		System.out.println("| 1 -- Add a vehicle         |");
 		System.out.println("| 2 -- Remove a vehicle      |");
-		System.out.println("| 3 -- Return to log-in menu |");
+		System.out.println("| 3 -- View transactions     |");
+		System.out.println("| 4 -- Return to log-in menu |");
 		System.out.println("|                            |");
 		System.out.println("==============================");
 		
@@ -37,7 +38,7 @@ public class ManagerMenu implements IMenu{
 		
 		
 		while (true) {
-		int choice = inputValidation.getValidInt("Enter input here:");
+		int choice = inputValidation.getValidInt("\n Enter input here: \n");
 		switch (choice) {
 		
 			case 0:
@@ -56,8 +57,12 @@ public class ManagerMenu implements IMenu{
 				currentMenu = menuFactory.changeMenu("Manager");
 				currentMenu.menuStart();
 				break;
-				
 			case 3:
+				carRepoDB.viewTransactions();
+				currentMenu = menuFactory.changeMenu("Manager");
+				currentMenu.menuStart();
+				break;
+			case 4:
 				currentMenu = menuFactory.changeMenu("Login Menu");
 				currentMenu.menuStart();
 				break;

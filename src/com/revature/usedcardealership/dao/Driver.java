@@ -14,8 +14,8 @@ public class Driver {
 		
 		currentMenu.menuStart();
 		
-		//CarRepoDB crdb = new CarRepoDB();
-		//crdb.getAllCars();
+//		CarRepoDB crdb = new CarRepoDB();
+//		crdb.viewTransactions();
 	}
 
 }

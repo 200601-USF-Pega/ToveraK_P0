@@ -103,15 +103,17 @@ public class CarRepoDB implements ICarRepo{
 		int vehicleId = inputValidation.getValidInt("--Please enter vehicle #id to finish processing--");
 		String cFirstName = inputValidation.getValidString("--Enter customer first name--");
 		String cLastName = inputValidation.getValidString("--Enter customer last name--");
+		int paidPrice = inputValidation.getValidInt("--Enter amount paid--");
 		
 		try {
 			
 			
-			PreparedStatement vehicleStatement = connection.prepareStatement("INSERT INTO transactions (sales_id, vehicle_id, customer_fname, customer_lname) VALUES (?, ?, ?, ?)");
+			PreparedStatement vehicleStatement = connection.prepareStatement("INSERT INTO transactions (sales_id, vehicle_id, customer_fname, customer_lname, paid_price) VALUES (?, ?, ?, ?, ?)");
 			vehicleStatement.setInt(1, salesId);
 			vehicleStatement.setInt(2, vehicleId);
 			vehicleStatement.setString(3, cFirstName);
 			vehicleStatement.setString(4, cLastName);
+			vehicleStatement.setInt(5, paidPrice);
 			vehicleStatement.executeUpdate();
 			
 			try {
@@ -192,4 +194,48 @@ public class CarRepoDB implements ICarRepo{
 //		return null;
 	}
 	
+	public void viewTransactions() {
+		try {
+			Statement st = connection.createStatement();
+			ResultSet rs = st.executeQuery("SELECT customer_id, sales_id, vehicle_id, customer_fname, customer_lname, paid_price, timestamp FROM transactions");
+			while (rs.next()) {
+				int customerId = rs.getInt("customer_id");
+				int salesId = rs.getInt("sales_id");
+				int vehicleId = rs.getInt("vehicle_id");
+//				String firstName = rs.getString("customer_fname");
+//				String lastName = rs.getString("custom_lname");
+				int price = rs.getInt("paid_price");
+				String timeStamp = rs.getString("timestamp");
+				
+				
+				
+				System.out.println("Recent transactions: \n\n" + "[Customer #ID] = " + customerId + " [Associate #ID] = " + salesId + " [VIN#] = " + vehicleId + " [Price paid] = $" + price + " [Timestamp] = " + timeStamp + "\n\n\n");
+				
+				try {
+					connection.close();
+				} catch(Exception e) {
+					
+				}
+			}
+		}catch (Exception e) {
+			
+		}
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
