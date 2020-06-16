@@ -29,7 +29,7 @@ public class BuyMenu implements IMenu{
 		switch(choice) {
 			
 			case 0:
-				System.out.println("\n Vroom! Vroom! \n");
+				System.out.println("\n VROOM! VROOM! \n");
 				currentMenu = menuFactory.changeMenu("Login Menu");
 				currentMenu.menuStart();
 				break;

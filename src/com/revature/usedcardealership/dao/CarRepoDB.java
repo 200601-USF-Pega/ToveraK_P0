@@ -10,7 +10,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
+import com.revature.usedcardealership.menu.ConnectionManager;
 import com.revature.usedcardealership.menu.IMenu;
 import com.revature.usedcardealership.menu.MenuFactory;
 import com.revature.usedcardealership.models.Vehicle;
@@ -20,36 +25,62 @@ import com.revature.usedcardealership.service.ValidationService;
 
 public class CarRepoDB implements ICarRepo{
 	
+	   static Handler fileHandler = null;
+	    private static final Logger LOGGER = Logger.getLogger(CarRepoDB.class
+	            .getClass().getName());
+
+	    public static void setup() {
+
+	        try {
+	            fileHandler = new FileHandler("./logfile.log");//file
+	            SimpleFormatter simple = new SimpleFormatter();
+	            fileHandler.setFormatter(simple);
+
+	            LOGGER.addHandler(fileHandler);//adding Handler for file
+
+	        } catch (IOException e) {
+	            // TODO Auto-generated catch block
+	        }
+
+	    }
+	
 //	ConnectionService connectionService;
 //	public CarRepoDB(ConnectionService connectionService) {
 //		this.connectionService = connectionService;
 //	}
 	
-	ConnectionService connectionService = new ConnectionService();
-	
-	Connection connection;
-	
-	public CarRepoDB() {
-		try  {
-			connection = DriverManager.getConnection("jdbc:postgresql://ruby.db.elephantsql.com:5432/kqvninng", 
-					"kqvninng", "0zQV9mbqXy_URCIpNEQFgiVg-mqGyvZT");
-			
-		} catch (SQLException e) {
-			System.out.println("Exception: " + e.getMessage());
-			e.printStackTrace();
-		}
-		
-	}
+//	ConnectionService connectionService = new ConnectionService();
+//	
+//	Connection connection;
+//	
+//	public CarRepoDB() {
+//		
+//		 setup();
+//		    LOGGER.info("connected to DB");
+//		
+//		try  {
+//			connection = DriverManager.getConnection("jdbc:postgresql://ruby.db.elephantsql.com:5432/kqvninng", 
+//					"kqvninng", "0zQV9mbqXy_URCIpNEQFgiVg-mqGyvZT");
+//			
+//		} catch (SQLException e) {
+//			System.out.println("Exception: " + e.getMessage());
+//			e.printStackTrace();
+//		}
+//		
+//	}
 
 	@Override
 	public Vehicle addVehicle(Vehicle vehicle) {
+
+		 setup();
+		    LOGGER.info("added vehicle");
 
 
 		
 			try {
 				
 				
-				PreparedStatement vehicleStatement = connection.prepareStatement("INSERT INTO vehicles VALUES (?, ?, ?, ?, ?)");
+				PreparedStatement vehicleStatement = ConnectionManager.getConnection().prepareStatement("INSERT INTO vehicles VALUES (?, ?, ?, ?, ?)");
 				vehicleStatement.setInt(1, vehicle.getId());
 				vehicleStatement.setString(2, vehicle.getMake());
 				vehicleStatement.setString(3, vehicle.getModel());
@@ -58,11 +89,7 @@ public class CarRepoDB implements ICarRepo{
 				vehicleStatement.setInt(5, vehicle.salePrice());
 				vehicleStatement.executeUpdate();
 				
-				try {
-					connection.close();
-				} catch(Exception e) {
-					
-				}
+				ConnectionManager.closeConnection();
 		
 				return vehicle;
 				
@@ -76,8 +103,11 @@ public class CarRepoDB implements ICarRepo{
 
 	@Override
 	public void getAllCars() {
+		 setup();
+		    LOGGER.info("viewed inventory");
+		    
 		try {
-			Statement st = connection.createStatement();
+			Statement st = ConnectionManager.getConnection().createStatement();
 			ResultSet rs = st.executeQuery("SELECT car_year, make, model  FROM vehicles");
 			while (rs.next()) {
 				String model = rs.getString("model");
@@ -85,11 +115,7 @@ public class CarRepoDB implements ICarRepo{
 				int year = rs.getInt("car_year");
 				
 				System.out.println(year + " " + make + " " + model);
-				try {
-					connection.close();
-				} catch(Exception e) {
-					
-				}
+				ConnectionManager.closeConnection();
 			}
 		}catch (Exception e) {
 			
@@ -98,6 +124,10 @@ public class CarRepoDB implements ICarRepo{
 	}
 	
 	public void buyVehicle() {
+		
+		 setup();
+		    LOGGER.info("bought vehicle");
+		
 		ValidationService inputValidation = new ValidationService();
 		int salesId = inputValidation.getValidInt("--Please enter sales #id to process sale--");
 		int vehicleId = inputValidation.getValidInt("--Please enter vehicle #id to finish processing--");
@@ -108,7 +138,7 @@ public class CarRepoDB implements ICarRepo{
 		try {
 			
 			
-			PreparedStatement vehicleStatement = connection.prepareStatement("INSERT INTO transactions (sales_id, vehicle_id, customer_fname, customer_lname, paid_price) VALUES (?, ?, ?, ?, ?)");
+			PreparedStatement vehicleStatement = ConnectionManager.getConnection().prepareStatement("INSERT INTO transactions (sales_id, vehicle_id, customer_fname, customer_lname, paid_price) VALUES (?, ?, ?, ?, ?)");
 			vehicleStatement.setInt(1, salesId);
 			vehicleStatement.setInt(2, vehicleId);
 			vehicleStatement.setString(3, cFirstName);
@@ -116,11 +146,7 @@ public class CarRepoDB implements ICarRepo{
 			vehicleStatement.setInt(5, paidPrice);
 			vehicleStatement.executeUpdate();
 			
-			try {
-				connection.close();
-			} catch(Exception e) {
-				
-			}
+			ConnectionManager.closeConnection();
 	
 			
 		} catch (SQLException e) {
@@ -159,6 +185,9 @@ public class CarRepoDB implements ICarRepo{
 	
 	public void deleteCar() throws FileNotFoundException, IOException {
 		
+		 setup();
+		    LOGGER.info("deleted vehicle");
+		
 		ValidationService inputValidation = new ValidationService();
 		int vehicleId = inputValidation.getValidInt("\n--Input vehicle id# to delete vehicle-- \n");
 		
@@ -168,18 +197,14 @@ public class CarRepoDB implements ICarRepo{
 		while(true) {
 		try {
 			
-			PreparedStatement vehicleStatement = connection.prepareStatement("DELETE FROM vehicles WHERE vehicle_id = (?)");
+			PreparedStatement vehicleStatement = ConnectionManager.getConnection().prepareStatement("DELETE FROM vehicles WHERE vehicle_id = (?)");
 			vehicleStatement.setInt(1, vehicleId);
 			vehicleStatement.executeUpdate();
 			
 			System.out.println("\n Vehicle id:" + vehicleId + " deleted! \n");
 //			return vehicle;
 			
-			try {
-				connection.close();
-			} catch(Exception e) {
-				
-			}
+			ConnectionManager.closeConnection();
 			
 			this.getAllCars();
 			currentMenu = menuFactory.changeMenu("Manager");
@@ -195,8 +220,9 @@ public class CarRepoDB implements ICarRepo{
 	}
 	
 	public void viewTransactions() {
+		System.out.println("Recent transactions: ");
 		try {
-			Statement st = connection.createStatement();
+			Statement st = ConnectionManager.getConnection().createStatement();
 			ResultSet rs = st.executeQuery("SELECT customer_id, sales_id, vehicle_id, customer_fname, customer_lname, paid_price, timestamp FROM transactions");
 			while (rs.next()) {
 				int customerId = rs.getInt("customer_id");
@@ -209,13 +235,9 @@ public class CarRepoDB implements ICarRepo{
 				
 				
 				
-				System.out.println("Recent transactions: \n\n" + "[Customer #ID] = " + customerId + " [Associate #ID] = " + salesId + " [VIN#] = " + vehicleId + " [Price paid] = $" + price + " [Timestamp] = " + timeStamp + "\n\n\n");
+				System.out.println("\n" + "[Customer #ID] = " + customerId + " [Associate #ID] = " + salesId + " [VIN#] = " + vehicleId + " [Price paid] = $" + price + " [Timestamp] = " + timeStamp);
 				
-				try {
-					connection.close();
-				} catch(Exception e) {
-					
-				}
+				ConnectionManager.closeConnection();
 			}
 		}catch (Exception e) {
 			

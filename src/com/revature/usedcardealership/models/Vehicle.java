@@ -2,10 +2,10 @@ package com.revature.usedcardealership.models;
 
 public class Vehicle {
 	
-	private int id;
-	private String make;
-	private String model;
-	private int year;
+	public int id;
+	public String make;
+	public String model;
+	public int year;
 	private int salePrice;
 	
 	public Vehicle() {

@@ -15,7 +15,7 @@ public class LogInMenu implements IMenu{
 		Scanner scan = new Scanner(System.in);
 		
 		System.out.println("==============================");
-		System.out.println("| Welcome to our Dealership! |");
+		System.out.println("|   #1 USED CAR DEALERSHIP   |");
 		System.out.println("==============================");
 		System.out.println("|                            |");
 		System.out.println("|  Please select an option:  |");
@@ -33,15 +33,43 @@ public class LogInMenu implements IMenu{
 		switch (choice) {
 			
 			case 0:
-				currentMenu = menuFactory.changeMenu("Manager");
-				currentMenu.menuStart();
-				break;
 				
+				String user, pass;
+				
+				while(true) {
+				user = inputValidation.getValidString("Enter your username: ");
+				
+				pass = inputValidation.getValidString("Enter your password: ");
+				
+				if(user.equals("manager") && (pass.equals("password"))) {
+					currentMenu = menuFactory.changeMenu("Manager");
+					
+					currentMenu.menuStart();
+				}else {
+					System.out.println("\nInvalid input... Please try again. \n");
+				}
+				
+				}
+
 			case 1:
-				currentMenu = menuFactory.changeMenu("Salesperson");
-				currentMenu.menuStart();
-				break;
-			
+				
+				String userSales, passSales;
+				
+				while(true) {
+				userSales = inputValidation.getValidString("Enter your username: ");
+				
+				passSales = inputValidation.getValidString("Enter your password: ");
+				
+				if(userSales.equals("sales") && (passSales.equals("password"))) {
+					currentMenu = menuFactory.changeMenu("Salesperson");
+					
+					currentMenu.menuStart();
+				}else {
+					System.out.println("\nInvalid input... Please try again. \n");
+				}
+				
+				}
+				
 			case 2:
 				System.out.println("Thanks for using this app Good Bye!");
 				System.exit(0);
